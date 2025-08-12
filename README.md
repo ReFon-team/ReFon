@@ -18,3 +18,23 @@
 * **ImageLoader** - Содержит фунционал для скачивания изображений
 * **Analytics** - Аналитика
 * **Logger** - Логирование
+
+<img src="https://github.com/ReFon-team/ReFon/blob/master/Screens/modules.png" alt="Modules scheme">
+
+## Инструкции по сборке
+
+Скачать tuist, если еще не скачен
+
+```bash
+brew install tuist
+```
+
+В корневой папке проекта выполнить
+
+```bash
+tuist generate
+```
+
+Выбрать схему App в XCodе, если не выбрана
+
+Запустить приложение
