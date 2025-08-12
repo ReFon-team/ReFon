@@ -15,4 +15,8 @@ public enum SimpleModule: String, ProjectProtocol {
     public var product: Product {
         self == .App ? .app : .framework
     }
+    
+    public var scripts: [TargetScript] {
+        self == .DesignSystem ? [.swiftgen()] : []
+    }
 }

@@ -54,7 +54,7 @@ public extension Target {
             infoPlist: infoPlist,
             sources: ["Sources/**"],
             resources: resources,
-            scripts: [.swiftlint(countInnerFolder: 0)],
+            scripts: [.swiftlint(countInnerFolder: 0)] + module.scripts,
             dependencies: dependencies
         )
     }

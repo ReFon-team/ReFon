@@ -7,6 +7,7 @@ let project = Project(
     targets: [
         .simple(
             .DesignSystem,
+            resources: Constants.DEFAULT_LOCATE_RESOURCES,
             dependencies: [
                 .simple(.Common),
                 .simple(.CoreEntities)
