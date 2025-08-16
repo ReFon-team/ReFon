@@ -12,7 +12,8 @@ public enum UserDefaultsKey: String {
 
 public protocol UserDefaultsStorageProtocol: AnyObject {
     func string(forKey key: UserDefaultsKey) -> String?
-    func integer(forKey key: UserDefaultsKey) -> Int?
+    func integer(forKey key: UserDefaultsKey) -> Int
+    func bool(forKey key: UserDefaultsKey) -> Bool
     
     func set(value: Any, forKey key: UserDefaultsKey)
 }
