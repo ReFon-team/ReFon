@@ -15,7 +15,7 @@ struct ReFonApp: App {
     private let resolver: Resolver
     
     init() {
-        self.resolver = DIConfigurator.configure(with: [])
+        self.resolver = DIConfigurator.configure(with: [UtilitiesAssembly()])
     }
     
     var body: some Scene {
