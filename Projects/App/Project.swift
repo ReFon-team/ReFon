@@ -7,14 +7,12 @@ let dependencies: [TargetDependency] = [
     .simple(.Common),
     .complex(.Networking, .impl),
     .complex(.Networking, .interfaces),
-    .complex(.ImageLoader, .impl),
-    .complex(.ImageLoader, .interfaces),
     .complex(.Persistance, .impl),
     .complex(.Persistance, .interfaces),
-    .complex(.LocalAPI, .impl),
-    .complex(.LocalAPI, .interfaces),
-    .complex(.API, .impl),
-    .complex(.API, .interfaces),
+    .complex(.Utilities, .impl),
+    .complex(.Utilities, .interfaces),
+    .complex(.DataSources, .impl),
+    .complex(.DataSources, .interfaces),
     .simple(.Analytics),
     .simple(.Logger)
 ]

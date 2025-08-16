@@ -5,9 +5,13 @@ Projects/Common/Common.xcodeproj
 Projects/Common/Derived
 Projects/Common/build
 
-Projects/API/API.xcodeproj
-Projects/API/Derived
-Projects/API/build
+Projects/Utilities/Utilities.xcodeproj
+Projects/Utilities/Derived
+Projects/Utilities/build
+
+Projects/DataSources/Utilities.xcodeproj
+Projects/DataSources/Derived
+Projects/DataSources/build
 
 Projects/App/App.xcodeproj
 Projects/App/Derived
@@ -53,22 +57,14 @@ Projects/Logger/Logger.xcodeproj
 Projects/Logger/Derived
 Projects/Logger/build
 
-Projects/ImageLoader/ImageLoader.xcodeproj
-Projects/ImageLoader/Derived
-Projects/ImageLoader/build
-
-Projects/LocalAPI/LocalAPI.xcodeproj
-Projects/LocalAPI/Derived
-Projects/LocalAPI/build
-
 Projects/Navigation/Navigation.xcodeproj
 Projects/Navigation/Derived
 Projects/Navigation/build
 
-Projects/Packages/Networking/Networking.xcodeproj
-Projects/Packages/Networking/Derived
+Projects/Networking/Networking.xcodeproj
+Projects/Networking/Derived
 Projects/Packages/Networking/build
 
-Projects/Packages/Persistance/Persistance.xcodeproj
-Projects/Packages/Persistance/Derived
-Projects/Packages/Persistance/build
+Projects/Persistance/Persistance.xcodeproj
+Projects/Persistance/Derived
+Projects/Persistance/build

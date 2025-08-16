@@ -3,12 +3,10 @@ import ProjectDescriptionHelpers
 
 let dependencies: [TargetDependency] = [
     .simple(.Common),
-    .complex(.API, .impl),
-    .complex(.API, .interfaces),
-    .complex(.ImageLoader, .impl),
-    .complex(.ImageLoader, .interfaces),
-    .complex(.LocalAPI, .impl),
-    .complex(.LocalAPI, .interfaces),
+    .complex(.Utilities, .impl),
+    .complex(.Utilities, .interfaces),
+    .complex(.DataSources, .impl),
+    .complex(.DataSources, .interfaces),
     .complex(.Networking, .impl),
     .complex(.Networking, .interfaces),
     .complex(.Persistance, .impl),

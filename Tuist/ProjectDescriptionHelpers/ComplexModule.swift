@@ -8,13 +8,11 @@
 import ProjectDescription
 
 public enum ComplexModule: String, ProjectProtocol {
-    case Networking, Persistance, API, LocalAPI, ImageLoader
+    case Networking, Persistance, Utilities, DataSources
     
     public var title: String { rawValue }
     
-    public var rootFolder: String? {
-        self == .Networking || self == .Persistance ? "Packages" : nil
-    }
+    public var rootFolder: String? { nil }
     
     public var path: Path {
         if let folder = rootFolder {

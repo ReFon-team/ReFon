@@ -2,24 +2,23 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project(
-    name: ComplexModule.API.title,
+    name: ComplexModule.Utilities.title,
     organizationName: Constants.ORGANIZATION_NAME,
     targets: [
         .complex(
-            .API,
+            .Utilities,
             target: .impl,
             dependencies: [
                 .simple(.Common),
-                .simple(.CoreEntities),
                 .complex(.Networking, .interfaces),
+                .complex(.Persistance, .interfaces)
             ]
         ),
         .complex(
-            .API,
+            .Utilities,
             target: .interfaces,
             dependencies: [
-                .simple(.Common),
-                .simple(.CoreEntities)
+                .simple(.Common)
             ]
         )
     ]

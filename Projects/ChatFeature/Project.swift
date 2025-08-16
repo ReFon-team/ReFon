@@ -29,9 +29,7 @@ let project = Project(
             dependencies: [
                 .simple(.Common),
                 .simple(.CoreEntities),
-                .complex(.ImageLoader, .interfaces),
-                .complex(.API, .interfaces),
-                .complex(.LocalAPI, .interfaces)
+                .complex(.DataSources, .interfaces)
             ]
         ),
         .feature(

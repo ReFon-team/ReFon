@@ -2,27 +2,25 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project(
-    name: ComplexModule.LocalAPI.title,
+    name: ComplexModule.DataSources.title,
     organizationName: Constants.ORGANIZATION_NAME,
     targets: [
         .complex(
-            .LocalAPI,
+            .DataSources,
             target: .impl,
             dependencies: [
                 .simple(.Common),
-                .simple(.CoreEntities),
+                .complex(.Utilities, .interfaces),
+                .complex(.Networking, .interfaces),
                 .complex(.Persistance, .interfaces)
-            ],
-            coreDataModels: [.coreDataModel(.path("Sources/LocalAPI/Store/Model.xcdatamodeld"))]
+            ]
         ),
         .complex(
-            .LocalAPI,
+            .DataSources,
             target: .interfaces,
             dependencies: [
-                .simple(.Common),
-                .simple(.CoreEntities)
+                .simple(.Common)
             ]
         )
     ]
 )
-
