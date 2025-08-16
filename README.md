@@ -11,11 +11,10 @@
 * **ChatFeature** - Чат
 * **ProfileFeature** - Профиль
 * **AuthFeature** - Авторизация
-* **API** - Содержит Network DataSources
-* **LocalAPI** - Содержит Local DataSources
+* **DataSources** - Содержит Local и Network Data Sources
 * **Networking** - Обретка над сетевым слоем (URLSession в моем случае)
 * **Persistance** - Обертка над local persistance (CoreData в моем случае)
-* **ImageLoader** - Содержит фунционал для скачивания изображений
+* **Utilties** - Содержит сервисы-утилиты
 * **Analytics** - Аналитика
 * **Logger** - Логирование
 
