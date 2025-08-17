@@ -8,9 +8,25 @@
 
 // swiftlint:disable:next foundation_using
 import Foundation
+import Common
 
 public protocol NetworkingProtocol: AnyObject {
-    func fetch<T: Decodable>(returnType: T.Type, router: Router) async throws -> T
-    func fetchData(for urlString: String) async throws -> Data
-    func uploadResource(data: Data, router: Router) async throws
+    func fetch<T: Decodable>(
+        returnType: T.Type,
+        router: Router,
+        headers: [String: String]
+    ) async throws -> T
+    
+    func fetchData(
+        for urlString: String,
+        method: HTTPMethod,
+        headers: [String: String]
+    ) async throws -> Data
+    
+    func uploadResource<T: Decodable>(
+        uploadData data: Data,
+        returnType: T.Type,
+        router: Router,
+        headers: [String: String]
+    ) async throws -> T
 }

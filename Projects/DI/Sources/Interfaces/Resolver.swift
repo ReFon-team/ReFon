@@ -8,6 +8,7 @@
 
 public protocol Resolver: AnyObject {
     func resolve<T>(_ type: T.Type, name: String?) -> T?
+    func resolve<T>(_ type: T.Type, name: DIServiceName?) -> T?
 }
 
 public extension Resolver {

@@ -21,12 +21,8 @@ final class DIContainer: Resolver, Registration {
     }
 
     @discardableResult
-    func register(_ type: Any.Type, name: String? = nil, constructor: @escaping ((Resolver) -> Any)) -> RegistrationConfigurator {
-        lock.lock()
-
-        defer {
-            lock.unlock()
-        }
+    func register(_ type: Any.Type, name: String?, constructor: @escaping ((Resolver) -> Any)) -> RegistrationConfigurator {
+        lock.lock(); defer { lock.unlock() }
         
         let key = makeKey(type, name: name)
 
@@ -35,18 +31,19 @@ final class DIContainer: Resolver, Registration {
         }
         
         if let defaultObjectScope {
-            register(type: type, in: defaultObjectScope)
+            register(type: type, name: name, in: defaultObjectScope)
         }
         
         return RegistrationConfigurator(self, type, name)
     }
+    
+    @discardableResult
+    func register(_ type: Any.Type, name: DIServiceName?, constructor: @escaping ((Resolver) -> Any)) -> RegistrationConfigurator {
+        register(type, name: name?.rawValue, constructor: constructor)
+    }
 
-    func resolve<T>(_ type: T.Type, name: String? = nil) -> T? {
-        lock.lock()
-
-        defer {
-            lock.unlock()
-        }
+    func resolve<T>(_ type: T.Type, name: String?) -> T? {
+        lock.lock(); defer { lock.unlock() }
 
         let key = makeKey(type, name: name)
 
@@ -66,8 +63,12 @@ final class DIContainer: Resolver, Registration {
 
         return nil
     }
+    
+    func resolve<T>(_ type: T.Type, name: DIServiceName?) -> T? {
+        resolve(type, name: name?.rawValue)
+    }
 
-    func register(type: Any.Type, name: String? = nil, in objectScope: ContainerObjectScope) {
+    func register(type: Any.Type, name: String?, in objectScope: ContainerObjectScope) {
         lock.lock()
         let key = makeKey(type, name: name)
         objectScopes[key] = objectScope

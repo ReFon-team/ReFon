@@ -9,11 +9,19 @@
 import DI
 import Utilities
 import UtilitiesInterfaces
+import NetworkingInterfaces
 
 final class UtilitiesAssembly: Assembly {
     func assemble(container: Registration) {
         container.register(UserDefaultsStorageProtocol.self) { _ in
             UserDefaultsStorage()
+        }
+        
+        container.register(NetworkingProtocol.self, name: .authNetworkingProxy) { resolver in
+            AuthNetworkingProxy(
+                networking: resolver.resolve(NetworkingProtocol.self)!,
+                userDefaultsStorage: resolver.resolve(UserDefaultsStorageProtocol.self)!
+            )
         }
     }
 }

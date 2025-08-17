@@ -8,6 +8,7 @@
 
 // swiftlint:disable:next foundation_using
 import Foundation
+import Common
 
 public protocol Router {
     var baseURL: String { get }
@@ -17,14 +18,14 @@ public protocol Router {
 }
 
 public extension Router {
-    func makeURLRequest() throws -> URLRequest {
+    func makeURLRequest(with inputHeaders: [String: String] = [:]) throws -> URLRequest {
         guard let url = URL(string: baseURL + "/" + endpoint) else { throw NetworkError.invalidURL }
-        var request = URLRequest(url: url)
-        request.httpMethod = method.getMethod()
         
-        for header in headers {
-            request.setValue(header.value, forHTTPHeaderField: header.key)
-        }
+        var allHeaders = headers.merging(inputHeaders) { current, _ in return current }
+        
+        var request = URLRequest(url: url)
+        request.setMethod(method)
+        request.setHeaders(headers)
         
         return request
     }

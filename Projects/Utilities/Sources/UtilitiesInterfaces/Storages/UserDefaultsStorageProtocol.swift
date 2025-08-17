@@ -7,7 +7,7 @@
 //
 
 public enum UserDefaultsKey: String {
-    case accessToken
+    case bearerToken
 }
 
 public protocol UserDefaultsStorageProtocol: AnyObject {
