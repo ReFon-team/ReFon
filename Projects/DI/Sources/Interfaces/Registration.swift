@@ -8,6 +8,7 @@
 
 public protocol Registration: AnyObject {
     @discardableResult func register(_ type: Any.Type, name: String?, constructor: @escaping ((Resolver) -> Any)) -> RegistrationConfigurator
+    @discardableResult func register(_ type: Any.Type, name: DIServiceName?, constructor: @escaping ((Resolver) -> Any)) -> RegistrationConfigurator
 }
 
 public extension Registration {
