@@ -9,7 +9,7 @@ Projects/Utilities/Utilities.xcodeproj
 Projects/Utilities/Derived
 Projects/Utilities/build
 
-Projects/DataSources/Utilities.xcodeproj
+Projects/DataSources/DataSources.xcodeproj
 Projects/DataSources/Derived
 Projects/DataSources/build
 
