@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Type a script or drag a script file from your workspace to insert its path.
 if [[ "$(uname -m)" == arm64 ]]
 then

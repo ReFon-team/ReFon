@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Type a script or drag a script file from your workspace to insert its path.
 export PATH="$PATH:/opt/homebrew/bin"
 if which swiftgen >& /dev/null; then
