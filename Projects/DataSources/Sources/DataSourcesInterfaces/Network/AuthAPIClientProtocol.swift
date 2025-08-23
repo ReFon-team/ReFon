@@ -7,7 +7,14 @@
 //
 
 import CoreEntities
+import Common
 
 public protocol AuthAPIClientProtocol: AnyObject {
-    func signUp(email: String, password: String) async throws -> Result<AuthUserModel, BackendError>
+    func signUp(credentials: AuthUserCredentials) async throws -> Result<AuthUserModel, BackendError>
+    
+    func verify(credentials: AuthVerifyCredentials) async throws -> Result<AuthTokensResponse, BackendError>
+    
+    func signInByPassword(credentials: AuthUserCredentials) async throws -> Result<AuthTokensResponse, BackendError>
+    
+    func recoverPassword(credentials: AuthRecoverPasswordCredenials) async throws -> OperationResult<BackendError>
 }

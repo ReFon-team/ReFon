@@ -17,7 +17,8 @@ struct ReFonApp: App {
     init() {
         self.resolver = DIConfigurator.configure(with: [
             UtilitiesAssembly(),
-            NetworkingAssembly()
+            NetworkingAssembly(),
+            DataSourcesAssembly()
         ])
     }
     

@@ -30,4 +30,9 @@ public protocol BackendNetworkingProtocol: AnyObject {
         router: Router,
         additionalHeaders: [String: String]?
     ) async throws -> Result<T, BackendError>
+    
+    func fetch(
+        router: Router,
+        additionalHeaders: [String: String]?
+    ) async throws -> OperationResult<BackendError>
 }

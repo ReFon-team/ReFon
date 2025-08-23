@@ -38,6 +38,19 @@ public final class BackendNetworking: BackendNetworkingProtocol {
         )
     }
     
+    public func fetch(
+        router: Router,
+        additionalHeaders: [String : String]?
+    ) async throws -> OperationResult<BackendError> {
+        let allHeaders = mergeWithAPIKeyHeaders(additionalHeaders)
+        
+        return try await networking.fetch(
+            returnError: BackendError.self,
+            router: router,
+            additionalHeaders: allHeaders
+        )
+    }
+    
     public func fetchData(
         for urlString: String,
         method: Common.HTTPMethod,

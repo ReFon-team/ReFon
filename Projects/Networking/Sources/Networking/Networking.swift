@@ -39,6 +39,18 @@ public final class Networking: NetworkingProtocol {
         return try decode(data: data, returnType: returnType, returnError: returnError)
     }
     
+    public func fetch<Error: Decodable>(
+        returnError: Error.Type,
+        router: Router,
+        additionalHeaders: [String: String]? = nil
+    ) async throws -> OperationResult<Error> {
+        let request = try router.makeURLRequest(with: additionalHeaders)
+        
+        let data = try await data(for: request)
+        
+        return decode(data: data, returnError: returnError)
+    }
+    
     public func fetchData(
         for urlString: String,
         method: HTTPMethod = .get,
@@ -50,9 +62,7 @@ public final class Networking: NetworkingProtocol {
         request.setMethod(method)
         request.setHeaders(additionalHeaders)
         
-        let (data, response) = try await urlSession.data(for: request)
-        
-        try handleResponse(response)
+        let data = try await data(for: request)
         
         return data
     }
@@ -87,6 +97,22 @@ private extension Networking {
         }
         
         throw NetworkError.dataConversionFailure
+    }
+    
+    func decode<Error: Decodable>(data: Data, returnError: Error.Type) -> OperationResult<Error> {
+        if let decodedError = try? JSONDecoder().decode(returnError, from: data) {
+            return .failure(decodedError)
+        }
+        
+        return .success
+    }
+    
+    func data(for request: URLRequest) async throws -> Data {
+        let (data, response) = try await urlSession.data(for: request)
+        
+        try handleResponse(response)
+        
+        return data
     }
     
     func handleResponse(_ response: URLResponse) throws {

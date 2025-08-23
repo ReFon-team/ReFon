@@ -31,4 +31,10 @@ public protocol NetworkingProtocol: AnyObject {
         router: Router,
         additionalHeaders: [String: String]?
     ) async throws -> Result<T, Error>
+    
+    func fetch<Error: Decodable>(
+        returnError: Error.Type,
+        router: Router,
+        additionalHeaders: [String: String]?
+    ) async throws -> OperationResult<Error>
 }
