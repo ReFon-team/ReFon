@@ -24,64 +24,97 @@ public final class Networking: NetworkingProtocol {
         self.urlSession = URLSession(configuration: configuration)
     }
     
-    public func fetch<T: Decodable>(
+    public func fetch<T: Decodable, Error: Decodable>(
         returnType: T.Type,
+        returnError: Error.Type,
         router: Router,
-        headers: [String: String] = [:]
-    ) async throws -> T {
-        let request = try router.makeURLRequest(with: headers)
+        additionalHeaders: [String: String]? = nil
+    ) async throws -> Result<T, Error> {
+        let request = try router.makeURLRequest(with: additionalHeaders)
         
         let (data, response) = try await urlSession.data(for: request)
         
         try handleResponse(response)
         
-        return try decode(data: data, to: returnType)
+        return try decode(data: data, returnType: returnType, returnError: returnError)
+    }
+    
+    // swiftlint:disable:next generic_constraint_naming
+    public func fetch<Error: Decodable>(
+        returnError: Error.Type,
+        router: Router,
+        additionalHeaders: [String: String]? = nil
+    ) async throws -> OperationResult<Error> {
+        let request = try router.makeURLRequest(with: additionalHeaders)
+        
+        let data = try await data(for: request)
+        
+        return decode(data: data, returnError: returnError)
     }
     
     public func fetchData(
         for urlString: String,
         method: HTTPMethod = .get,
-        headers: [String: String] = [:]
+        additionalHeaders: [String: String]? = nil
     ) async throws -> Data {
         guard let url = URL(string: urlString) else { throw URLError(.badURL) }
         
         var request = URLRequest(url: url)
         request.setMethod(method)
-        request.setHeaders(headers)
+        request.setHeaders(additionalHeaders)
         
-        let (data, response) = try await urlSession.data(for: request)
-        
-        try handleResponse(response)
+        let data = try await data(for: request)
         
         return data
     }
     
-    public func uploadResource<T: Decodable>(
+    public func uploadResource<T: Decodable, Error: Decodable>(
         uploadData data: Data,
         returnType: T.Type,
+        returnError: Error.Type,
         router: Router,
-        headers: [String: String] = [:]
-    ) async throws -> T {
-        let request = try router.makeURLRequest(with: headers)
+        additionalHeaders: [String: String]? = nil
+    ) async throws -> Result<T, Error> {
+        let request = try router.makeURLRequest(with: additionalHeaders)
         
         let (data, response) = try await urlSession.upload(for: request, from: data)
         
         try handleResponse(response)
         
-        return try decode(data: data, to: returnType)
+        return try decode(data: data, returnType: returnType, returnError: returnError)
     }
 }
 
 // MARK: - Private Methods
 
 private extension Networking {
-    func decode<T: Decodable>(data: Data, to returnType: T.Type) throws -> T {
-        do {
-            let decodedData = try JSONDecoder().decode(returnType, from: data)
-            return decodedData
-        } catch {
-            throw NetworkError.dataConversionFailure
+    func decode<T: Decodable, Error: Decodable>(data: Data, returnType: T.Type, returnError: Error.Type) throws -> Result<T, Error> {
+        if let decodedData = try? JSONDecoder().decode(returnType, from: data) {
+            return .success(decodedData)
         }
+        
+        if let decodedError = try? JSONDecoder().decode(returnError, from: data) {
+            return .failure(decodedError)
+        }
+        
+        throw NetworkError.dataConversionFailure
+    }
+    
+    // swiftlint:disable:next generic_constraint_naming
+    func decode<Error: Decodable>(data: Data, returnError: Error.Type) -> OperationResult<Error> {
+        if let decodedError = try? JSONDecoder().decode(returnError, from: data) {
+            return .failure(decodedError)
+        }
+        
+        return .success
+    }
+    
+    func data(for request: URLRequest) async throws -> Data {
+        let (data, response) = try await urlSession.data(for: request)
+        
+        try handleResponse(response)
+        
+        return data
     }
     
     func handleResponse(_ response: URLResponse) throws {

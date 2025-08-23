@@ -17,10 +17,9 @@ final class UtilitiesAssembly: Assembly {
             UserDefaultsStorage()
         }
         
-        container.register(NetworkingProtocol.self, name: .authNetworkingProxy) { resolver in
-            AuthNetworkingProxy(
-                networking: resolver.resolve(NetworkingProtocol.self)!,
-                userDefaultsStorage: resolver.resolve(UserDefaultsStorageProtocol.self)!
+        container.register(BackendNetworkingProtocol.self) { resolver in
+            BackendNetworking(
+                networking: resolver.resolve(NetworkingProtocol.self)!
             )
         }
     }

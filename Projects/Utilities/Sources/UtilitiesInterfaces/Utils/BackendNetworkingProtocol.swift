@@ -1,22 +1,23 @@
 //
-//  NetworkingInterfaces.swift
-//  Networking
+//  BackendNetworkingProtocol.swift
+//  Utilities
 //
-//  Created by Вадим Мартыненко on 10.08.2025.
+//  Created by Вадим Мартыненко on 23.08.2025.
 //  Copyright © 2025 Vadim Martynenko. All rights reserved.
 //
 
 // swiftlint:disable:next foundation_using
 import Foundation
+import CoreEntities
 import Common
+import NetworkingInterfaces
 
-public protocol NetworkingProtocol: AnyObject {
-    func fetch<T: Decodable, Error: Decodable> (
+public protocol BackendNetworkingProtocol: AnyObject {
+    func fetch<T: Decodable> (
         returnType: T.Type,
-        returnError: Error.Type,
         router: Router,
         additionalHeaders: [String: String]?
-    ) async throws -> Result<T, Error>
+    ) async throws -> Result<T, BackendError>
     
     func fetchData(
         for urlString: String,
@@ -24,18 +25,15 @@ public protocol NetworkingProtocol: AnyObject {
         additionalHeaders: [String: String]?
     ) async throws -> Data
     
-    func uploadResource<T: Decodable, Error: Decodable>(
+    func uploadResource<T: Decodable>(
         uploadData data: Data,
         returnType: T.Type,
-        returnError: Error.Type,
         router: Router,
         additionalHeaders: [String: String]?
-    ) async throws -> Result<T, Error>
+    ) async throws -> Result<T, BackendError>
     
-    // swiftlint:disable:next generic_constraint_naming
-    func fetch<Error: Decodable>(
-        returnError: Error.Type,
+    func fetch(
         router: Router,
         additionalHeaders: [String: String]?
-    ) async throws -> OperationResult<Error>
+    ) async throws -> OperationResult<BackendError>
 }

@@ -10,6 +10,7 @@ let project = Project(
             target: .impl,
             dependencies: [
                 .simple(.Common),
+                .simple(.CoreEntities),
                 .complex(.Networking, .interfaces),
                 .complex(.Persistance, .interfaces)
             ]
@@ -18,7 +19,8 @@ let project = Project(
             .Utilities,
             target: .interfaces,
             dependencies: [
-                .simple(.Common)
+                .simple(.Common),
+                .complex(.Networking, .interfaces)
             ]
         )
     ]

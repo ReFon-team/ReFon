@@ -6,6 +6,7 @@
 //  Copyright © 2025 Vadim Martynenko. All rights reserved.
 //
 
+// swiftlint:disable:next foundation_using
 import Foundation
 
 public extension URLRequest {
@@ -13,9 +14,15 @@ public extension URLRequest {
         self.httpMethod = method.getMethod()
     }
     
-    mutating func setHeaders(_ headers: [String: String]) {
+    mutating func setHeaders(_ headers: [String: String]?) {
+        guard let headers else { return }
+        
         for header in headers {
             self.setValue(header.value, forHTTPHeaderField: header.key)
         }
+    }
+    
+    mutating func setBody(_ body: Data?) {
+        httpBody = body
     }
 }

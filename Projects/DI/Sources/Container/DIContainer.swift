@@ -36,11 +36,6 @@ final class DIContainer: Resolver, Registration {
         
         return RegistrationConfigurator(self, type, name)
     }
-    
-    @discardableResult
-    func register(_ type: Any.Type, name: DIServiceName?, constructor: @escaping ((Resolver) -> Any)) -> RegistrationConfigurator {
-        register(type, name: name?.rawValue, constructor: constructor)
-    }
 
     func resolve<T>(_ type: T.Type, name: String?) -> T? {
         lock.lock(); defer { lock.unlock() }
@@ -62,10 +57,6 @@ final class DIContainer: Resolver, Registration {
         }
 
         return nil
-    }
-    
-    func resolve<T>(_ type: T.Type, name: DIServiceName?) -> T? {
-        resolve(type, name: name?.rawValue)
     }
 
     func register(type: Any.Type, name: String?, in objectScope: ContainerObjectScope) {
