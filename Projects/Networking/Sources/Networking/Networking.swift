@@ -24,18 +24,19 @@ public final class Networking: NetworkingProtocol {
         self.urlSession = URLSession(configuration: configuration)
     }
     
-    public func fetch<T: Decodable>(
+    public func fetch<T: Decodable, Error: Decodable>(
         returnType: T.Type,
+        returnError: Error.Type,
         router: Router,
         headers: [String: String] = [:]
-    ) async throws -> T {
+    ) async throws -> Result<T, Error> {
         let request = try router.makeURLRequest(with: headers)
         
         let (data, response) = try await urlSession.data(for: request)
         
         try handleResponse(response)
         
-        return try decode(data: data, to: returnType)
+        return try decode(data: data, returnType: returnType, returnError: returnError)
     }
     
     public func fetchData(
@@ -56,32 +57,36 @@ public final class Networking: NetworkingProtocol {
         return data
     }
     
-    public func uploadResource<T: Decodable>(
+    public func uploadResource<T: Decodable, Error: Decodable>(
         uploadData data: Data,
         returnType: T.Type,
+        returnError: Error.Type,
         router: Router,
         headers: [String: String] = [:]
-    ) async throws -> T {
+    ) async throws -> Result<T, Error> {
         let request = try router.makeURLRequest(with: headers)
         
         let (data, response) = try await urlSession.upload(for: request, from: data)
         
         try handleResponse(response)
         
-        return try decode(data: data, to: returnType)
+        return try decode(data: data, returnType: returnType, returnError: returnError)
     }
 }
 
 // MARK: - Private Methods
 
 private extension Networking {
-    func decode<T: Decodable>(data: Data, to returnType: T.Type) throws -> T {
-        do {
-            let decodedData = try JSONDecoder().decode(returnType, from: data)
-            return decodedData
-        } catch {
-            throw NetworkError.dataConversionFailure
+    func decode<T: Decodable, Error: Decodable>(data: Data, returnType: T.Type, returnError: Error.Type) throws -> Result<T, Error> {
+        if let decodedData = try? JSONDecoder().decode(returnType, from: data) {
+            return .success(decodedData)
         }
+        
+        if let decodedError = try? JSONDecoder().decode(returnError, from: data) {
+            return .failure(decodedError)
+        }
+        
+        throw NetworkError.dataConversionFailure
     }
     
     func handleResponse(_ response: URLResponse) throws {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct BackendError: Decodable {
+public struct BackendError: Decodable, Error {
     public let code: Int
     public let errorCode: String
     public let message: String

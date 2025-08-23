@@ -11,8 +11,9 @@ import Foundation
 import NetworkingInterfaces
 import UtilitiesInterfaces
 import Common
+import CoreEntities
 
-public final class AuthNetworkingProxy: NetworkingProtocol {
+public final class BackendNetworking: BackendNetworkingProtocol {
     // swiftlint:disable:next identifier_name line_length
     private let ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyZnBxbHl5Y3Rhd3ZlYXVibWF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2Njc1NDUsImV4cCI6MjA3MDI0MzU0NX0.gpad7U4zEQMgDa6_IezLHqVIKuSjgbMRreFFaEUdQ4M"
     
@@ -28,9 +29,15 @@ public final class AuthNetworkingProxy: NetworkingProtocol {
         returnType: T.Type,
         router: Router,
         headers: [String: String]
-    ) async throws -> T {
-        let allHeaders = mergeHeadersWithTokenHeaders(headers)
-        return try await networking.fetch(returnType: returnType, router: router, headers: allHeaders)
+    ) async throws -> Result<T, BackendError> {
+        let allHeaders = mergeHeadersWithAPIKeyHeaders(headers)
+        
+        return try await networking.fetch(
+            returnType: returnType,
+            returnError: BackendError.self,
+            router: router,
+            headers: allHeaders
+        )
     }
     
     public func fetchData(
@@ -38,7 +45,7 @@ public final class AuthNetworkingProxy: NetworkingProtocol {
         method: Common.HTTPMethod,
         headers: [String: String]
     ) async throws -> Data {
-        let allHeaders = mergeHeadersWithTokenHeaders(headers)
+        let allHeaders = mergeHeadersWithAPIKeyHeaders(headers)
         return try await networking.fetchData(for: urlString, method: method, headers: allHeaders)
     }
     
@@ -47,11 +54,13 @@ public final class AuthNetworkingProxy: NetworkingProtocol {
         returnType: T.Type,
         router: Router,
         headers: [String: String]
-    ) async throws -> T {
-        let allHeaders = mergeHeadersWithTokenHeaders(headers)
+    ) async throws -> Result<T, BackendError> {
+        let allHeaders = mergeHeadersWithAPIKeyHeaders(headers)
+        
         return try await networking.uploadResource(
             uploadData: data,
             returnType: returnType,
+            returnError: BackendError.self,
             router: router,
             headers: allHeaders
         )
@@ -60,20 +69,15 @@ public final class AuthNetworkingProxy: NetworkingProtocol {
 
 // MARK: - Private Methods
 
-private extension AuthNetworkingProxy {
-    func mergeHeadersWithTokenHeaders(_ headers: [String: String]) -> [String: String] {
-        let tokenHeaders = getTokenHeaders()
-        return headers.merging(tokenHeaders) { current, _ in current}
+private extension BackendNetworking {
+    func mergeHeadersWithAPIKeyHeaders(_ headers: [String: String]) -> [String: String] {
+        let apiKeyHeaders = getAPIKeyHeaders()
+        return headers.merging(apiKeyHeaders) { current, _ in current}
     }
     
-    func getTokenHeaders() -> [String: String] {
+    func getAPIKeyHeaders() -> [String: String] {
         var headers: [String: String] = [:]
         headers["apikey"] = ANON_KEY
-        
-        if let token = userDefaultsStorage.string(forKey: .accessToken) {
-            headers["Authorization"] = "Bearer \(token)"
-        }
-        
         return headers
     }
 }

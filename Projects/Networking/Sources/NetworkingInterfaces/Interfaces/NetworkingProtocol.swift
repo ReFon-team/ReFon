@@ -11,11 +11,12 @@ import Foundation
 import Common
 
 public protocol NetworkingProtocol: AnyObject {
-    func fetch<T: Decodable>(
+    func fetch<T: Decodable, Error: Decodable> (
         returnType: T.Type,
+        returnError: Error.Type,
         router: Router,
         headers: [String: String]
-    ) async throws -> T
+    ) async throws -> Result<T, Error>
     
     func fetchData(
         for urlString: String,
@@ -23,10 +24,11 @@ public protocol NetworkingProtocol: AnyObject {
         headers: [String: String]
     ) async throws -> Data
     
-    func uploadResource<T: Decodable>(
+    func uploadResource<T: Decodable, Error: Decodable>(
         uploadData data: Data,
         returnType: T.Type,
+        returnError: Error.Type,
         router: Router,
         headers: [String: String]
-    ) async throws -> T
+    ) async throws -> Result<T, Error>
 }
