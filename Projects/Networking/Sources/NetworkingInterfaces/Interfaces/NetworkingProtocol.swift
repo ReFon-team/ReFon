@@ -32,6 +32,7 @@ public protocol NetworkingProtocol: AnyObject {
         additionalHeaders: [String: String]?
     ) async throws -> Result<T, Error>
     
+    // swiftlint:disable:next generic_constraint_naming
     func fetch<Error: Decodable>(
         returnError: Error.Type,
         router: Router,

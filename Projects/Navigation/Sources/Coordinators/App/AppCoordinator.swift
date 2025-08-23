@@ -18,7 +18,7 @@ public final class AppCoordinator {
         var id: String { rawValue }
     }
     
-    var fullScreenCover: Feature? = nil
+    var fullScreenCover: Feature?
     
     private let resolver: Resolver
     

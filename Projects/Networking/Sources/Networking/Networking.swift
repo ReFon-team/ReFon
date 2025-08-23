@@ -39,6 +39,7 @@ public final class Networking: NetworkingProtocol {
         return try decode(data: data, returnType: returnType, returnError: returnError)
     }
     
+    // swiftlint:disable:next generic_constraint_naming
     public func fetch<Error: Decodable>(
         returnError: Error.Type,
         router: Router,
@@ -99,6 +100,7 @@ private extension Networking {
         throw NetworkError.dataConversionFailure
     }
     
+    // swiftlint:disable:next generic_constraint_naming
     func decode<Error: Decodable>(data: Data, returnError: Error.Type) -> OperationResult<Error> {
         if let decodedError = try? JSONDecoder().decode(returnError, from: data) {
             return .failure(decodedError)

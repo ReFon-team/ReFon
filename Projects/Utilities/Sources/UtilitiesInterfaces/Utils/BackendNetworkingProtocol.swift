@@ -6,9 +6,10 @@
 //  Copyright © 2025 Vadim Martynenko. All rights reserved.
 //
 
+// swiftlint:disable:next foundation_using
+import Foundation
 import CoreEntities
 import Common
-import Foundation
 import NetworkingInterfaces
 
 public protocol BackendNetworkingProtocol: AnyObject {

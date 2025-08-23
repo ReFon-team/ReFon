@@ -40,7 +40,7 @@ public final class BackendNetworking: BackendNetworkingProtocol {
     
     public func fetch(
         router: Router,
-        additionalHeaders: [String : String]?
+        additionalHeaders: [String: String]?
     ) async throws -> OperationResult<BackendError> {
         let allHeaders = mergeWithAPIKeyHeaders(additionalHeaders)
         

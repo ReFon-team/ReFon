@@ -6,8 +6,9 @@
 //  Copyright © 2025 Vadim Martynenko. All rights reserved.
 //
 
-import Common
+// swiftlint:disable:next foundation_using
 import Foundation
+import Common
 
 public struct AuthVerifyCredentials: EndpointCredentials {
     public let type: TypeVerify
