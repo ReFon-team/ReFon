@@ -14,18 +14,27 @@ public protocol Router {
     var baseURL: String { get }
     var endpoint: String { get }
     var method: HTTPMethod { get }
-    var headers: [String: String] { get }
+    var headers: [String: String]? { get }
+    var body: [String: String]? { get }
 }
 
 public extension Router {
     func makeURLRequest(with inputHeaders: [String: String] = [:]) throws -> URLRequest {
         guard let url = URL(string: baseURL + "/" + endpoint) else { throw NetworkError.invalidURL }
         
-        var allHeaders = headers.merging(inputHeaders) { current, _ in return current }
+        var allHeaders: [String: String] = inputHeaders
+        
+        if let headers {
+            allHeaders = headers.merging(inputHeaders) { current, _ in return current }
+        }
         
         var request = URLRequest(url: url)
         request.setMethod(method)
-        request.setHeaders(headers)
+        request.setHeaders(allHeaders)
+        
+        if let body = body {
+            request.setBody(body)
+        }
         
         return request
     }

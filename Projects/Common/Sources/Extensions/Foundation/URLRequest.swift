@@ -18,4 +18,8 @@ public extension URLRequest {
             self.setValue(header.value, forHTTPHeaderField: header.key)
         }
     }
+    
+    mutating func setBody(_ body: [String: String]) {
+        httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+    }
 }
