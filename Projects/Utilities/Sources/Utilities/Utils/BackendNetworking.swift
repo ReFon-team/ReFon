@@ -18,51 +18,54 @@ public final class BackendNetworking: BackendNetworkingProtocol {
     private let ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyZnBxbHl5Y3Rhd3ZlYXVibWF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2Njc1NDUsImV4cCI6MjA3MDI0MzU0NX0.gpad7U4zEQMgDa6_IezLHqVIKuSjgbMRreFFaEUdQ4M"
     
     private let networking: NetworkingProtocol
-    private let userDefaultsStorage: UserDefaultsStorageProtocol
     
-    public init(networking: NetworkingProtocol, userDefaultsStorage: UserDefaultsStorageProtocol) {
+    public init(networking: NetworkingProtocol) {
         self.networking = networking
-        self.userDefaultsStorage = userDefaultsStorage
     }
     
     public func fetch<T: Decodable>(
         returnType: T.Type,
         router: Router,
-        headers: [String: String]
+        additionalHeaders: [String: String]?
     ) async throws -> Result<T, BackendError> {
-        let allHeaders = mergeHeadersWithAPIKeyHeaders(headers)
+        let allHeaders = mergeWithAPIKeyHeaders(additionalHeaders)
         
         return try await networking.fetch(
             returnType: returnType,
             returnError: BackendError.self,
             router: router,
-            headers: allHeaders
+            additionalHeaders: allHeaders
         )
     }
     
     public func fetchData(
         for urlString: String,
         method: Common.HTTPMethod,
-        headers: [String: String]
+        additionalHeaders: [String: String]?
     ) async throws -> Data {
-        let allHeaders = mergeHeadersWithAPIKeyHeaders(headers)
-        return try await networking.fetchData(for: urlString, method: method, headers: allHeaders)
+        let allHeaders = mergeWithAPIKeyHeaders(additionalHeaders)
+        
+        return try await networking.fetchData(
+            for: urlString,
+            method: method,
+            additionalHeaders: allHeaders
+        )
     }
     
     public func uploadResource<T: Decodable>(
         uploadData data: Data,
         returnType: T.Type,
         router: Router,
-        headers: [String: String]
+        additionalHeaders: [String: String]?
     ) async throws -> Result<T, BackendError> {
-        let allHeaders = mergeHeadersWithAPIKeyHeaders(headers)
+        let allHeaders = mergeWithAPIKeyHeaders(additionalHeaders)
         
         return try await networking.uploadResource(
             uploadData: data,
             returnType: returnType,
             returnError: BackendError.self,
             router: router,
-            headers: allHeaders
+            additionalHeaders: allHeaders
         )
     }
 }
@@ -70,8 +73,11 @@ public final class BackendNetworking: BackendNetworkingProtocol {
 // MARK: - Private Methods
 
 private extension BackendNetworking {
-    func mergeHeadersWithAPIKeyHeaders(_ headers: [String: String]) -> [String: String] {
+    func mergeWithAPIKeyHeaders(_ headers: [String: String]?) -> [String: String] {
         let apiKeyHeaders = getAPIKeyHeaders()
+        
+        guard let headers else { return apiKeyHeaders }
+        
         return headers.merging(apiKeyHeaders) { current, _ in current}
     }
     

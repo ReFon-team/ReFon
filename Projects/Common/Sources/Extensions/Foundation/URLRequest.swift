@@ -13,13 +13,15 @@ public extension URLRequest {
         self.httpMethod = method.getMethod()
     }
     
-    mutating func setHeaders(_ headers: [String: String]) {
+    mutating func setHeaders(_ headers: [String: String]?) {
+        guard let headers else { return }
+        
         for header in headers {
             self.setValue(header.value, forHTTPHeaderField: header.key)
         }
     }
     
-    mutating func setBody(_ body: [String: String]) {
-        httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+    mutating func setBody(_ body: Data?) {
+        httpBody = body
     }
 }

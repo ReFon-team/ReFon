@@ -6,6 +6,8 @@
 //  Copyright © 2025 Vadim Martynenko. All rights reserved.
 //
 
+import CoreEntities
+
 public protocol AuthAPIClientProtocol: AnyObject {
-    
+    func signUp(email: String, password: String) async throws -> Result<AuthUserModel, BackendError>
 }

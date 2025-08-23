@@ -10,11 +10,12 @@ import NetworkingInterfaces
 import DataSourcesInterfaces
 import Common
 import CoreEntities
+import UtilitiesInterfaces
 
 public final class AuthAPIClient: AuthAPIClientProtocol {
-    private let networking: NetworkingProtocol
+    private let networking: BackendNetworkingProtocol
     
-    public init(networking: NetworkingProtocol) {
+    public init(networking: BackendNetworkingProtocol) {
         self.networking = networking
     }
     
@@ -22,7 +23,7 @@ public final class AuthAPIClient: AuthAPIClientProtocol {
         case signUp(_ email: String, _ password: String)
         
         var baseURL: String {
-            Constants.baseURL + "/auth/v1"
+            AppConstants.Backend.baseURL + "/auth/v1"
         }
         
         var endpoint: String {
@@ -37,22 +38,19 @@ public final class AuthAPIClient: AuthAPIClientProtocol {
         
         var headers: [String: String]? { nil }
         
-        var body: [String: String]? {
+        var body: EndpointCredentials? {
             switch self {
             case let .signUp(email, password):
-                return [
-                    "email": email,
-                    "password": password
-                ]
+                return AuthUserCredentials(email: email, password: password)
             }
         }
     }
     
-    public func signUp(email: String, password: String) async throws -> AuthUserCredentials {
+    public func signUp(email: String, password: String) async throws -> Result<AuthUserModel, BackendError> {
         let endpoint = Endpoint.signUp(email, password)
         
-        let credentials = try await networking.fetch(returnType: AuthUserCredentials.self, router: endpoint, headers: [:])
+        let result = try await networking.fetch(returnType: AuthUserModel.self, router: endpoint, additionalHeaders: nil)
         
-        return credentials
+        return result
     }
 }

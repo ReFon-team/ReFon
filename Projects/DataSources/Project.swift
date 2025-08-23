@@ -19,7 +19,8 @@ let project = Project(
             .DataSources,
             target: .interfaces,
             dependencies: [
-                .simple(.Common)
+                .simple(.Common),
+                .simple(.CoreEntities)
             ]
         )
     ]

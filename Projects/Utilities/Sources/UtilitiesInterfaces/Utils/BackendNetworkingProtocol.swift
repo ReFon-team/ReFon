@@ -15,19 +15,19 @@ public protocol BackendNetworkingProtocol: AnyObject {
     func fetch<T: Decodable> (
         returnType: T.Type,
         router: Router,
-        headers: [String: String]
+        additionalHeaders: [String: String]?
     ) async throws -> Result<T, BackendError>
     
     func fetchData(
         for urlString: String,
         method: HTTPMethod,
-        headers: [String: String]
+        additionalHeaders: [String: String]?
     ) async throws -> Data
     
     func uploadResource<T: Decodable>(
         uploadData data: Data,
         returnType: T.Type,
         router: Router,
-        headers: [String: String]
+        additionalHeaders: [String: String]?
     ) async throws -> Result<T, BackendError>
 }

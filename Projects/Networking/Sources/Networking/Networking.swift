@@ -28,9 +28,9 @@ public final class Networking: NetworkingProtocol {
         returnType: T.Type,
         returnError: Error.Type,
         router: Router,
-        headers: [String: String] = [:]
+        additionalHeaders: [String: String]? = nil
     ) async throws -> Result<T, Error> {
-        let request = try router.makeURLRequest(with: headers)
+        let request = try router.makeURLRequest(with: additionalHeaders)
         
         let (data, response) = try await urlSession.data(for: request)
         
@@ -42,13 +42,13 @@ public final class Networking: NetworkingProtocol {
     public func fetchData(
         for urlString: String,
         method: HTTPMethod = .get,
-        headers: [String: String] = [:]
+        additionalHeaders: [String: String]? = nil
     ) async throws -> Data {
         guard let url = URL(string: urlString) else { throw URLError(.badURL) }
         
         var request = URLRequest(url: url)
         request.setMethod(method)
-        request.setHeaders(headers)
+        request.setHeaders(additionalHeaders)
         
         let (data, response) = try await urlSession.data(for: request)
         
@@ -62,9 +62,9 @@ public final class Networking: NetworkingProtocol {
         returnType: T.Type,
         returnError: Error.Type,
         router: Router,
-        headers: [String: String] = [:]
+        additionalHeaders: [String: String]? = nil
     ) async throws -> Result<T, Error> {
-        let request = try router.makeURLRequest(with: headers)
+        let request = try router.makeURLRequest(with: additionalHeaders)
         
         let (data, response) = try await urlSession.upload(for: request, from: data)
         

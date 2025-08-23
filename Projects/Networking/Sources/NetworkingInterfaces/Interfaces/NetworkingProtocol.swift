@@ -15,13 +15,13 @@ public protocol NetworkingProtocol: AnyObject {
         returnType: T.Type,
         returnError: Error.Type,
         router: Router,
-        headers: [String: String]
+        additionalHeaders: [String: String]?
     ) async throws -> Result<T, Error>
     
     func fetchData(
         for urlString: String,
         method: HTTPMethod,
-        headers: [String: String]
+        additionalHeaders: [String: String]?
     ) async throws -> Data
     
     func uploadResource<T: Decodable, Error: Decodable>(
@@ -29,6 +29,6 @@ public protocol NetworkingProtocol: AnyObject {
         returnType: T.Type,
         returnError: Error.Type,
         router: Router,
-        headers: [String: String]
+        additionalHeaders: [String: String]?
     ) async throws -> Result<T, Error>
 }
