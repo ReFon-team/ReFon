@@ -18,6 +18,7 @@
     - templateName: swift5
       params:
         forceProvidesNamespaces: true
+        publicAccess: true
       output: Sources/Generated/XCAssets+Generated.swift
  strings:
    inputs:
