@@ -8,12 +8,11 @@
 
 import SwiftUI
 
-struct OnboardingViewModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+@Observable
+public final class OnboardingViewModel {
+    
+    public init() {
+        
     }
-}
-
-#Preview {
-    OnboardingViewModel()
+    
 }

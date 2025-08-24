@@ -7,13 +7,60 @@
 //
 
 import SwiftUI
+import DesignSystem
 
-struct OnboardingView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+public struct OnboardingView: View {
+    
+    @State private var viewModel: OnboardingViewModel
+    
+    public init(viewModel: OnboardingViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    public var body: some View {
+        VStack {
+            Spacer()
+            
+            Image(uiImage: Asset.Images.onboardingStartImage.image)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxWidth: 300, maxHeight: 300)
+            
+            Spacer()
+            
+            VStack(spacing: 16) {
+                Text(Strings.Onboarding.title)
+                    .font(.system(size: 32, weight: .bold))
+                    .foregroundStyle(Color.black)
+                    .multilineTextAlignment(.center)
+                
+                Text(Strings.Onboarding.subtitle)
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(Color.black.opacity(0.6))
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+            }
+            
+            Spacer()
+            
+            VStack(spacing: 12) {
+                Button(Strings.Button.signIn) {
+                    //
+                }
+                .buttonStyle(PrimaryButtonStyle(style: .primary))
+                
+                Button(Strings.Button.createAccount) {
+                    //
+                }
+                .buttonStyle(PrimaryButtonStyle(style: .secondary))
+            }
+        }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 32)
+        .background(Color.white)
     }
 }
 
 #Preview {
-    OnboardingView()
+    OnboardingView(viewModel: OnboardingViewModel())
 }
