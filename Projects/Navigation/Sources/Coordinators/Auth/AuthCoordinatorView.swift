@@ -17,7 +17,7 @@ struct AuthCoordinatorView: View {
     
     var body: some View {
         NavigationStack(path: $coordinator.path) {
-            coordinator.build(screen: .signUp)
+            coordinator.build(screen: .onboarding)
                 .navigationDestination(for: AuthCoordinator.Screen.self) { screen in
                     coordinator.build(screen: screen)
                 }

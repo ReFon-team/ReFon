@@ -13,7 +13,7 @@ import SwiftUI
 @Observable
 public final class AuthCoordinator {
     enum Screen: String, CaseIterable {
-        case signUp
+        case onboarding, signUp
         
         var id: String { rawValue }
     }
@@ -26,8 +26,11 @@ public final class AuthCoordinator {
         self.resolver = resolver
     }
     
+    @ViewBuilder
     func build(screen: Screen) -> some View {
         switch screen {
+        case .onboarding:
+            OnboardingView(viewModel: OnboardingViewModel())
         case .signUp:
             SignUpView(
                 viewModel: SignUpViewModel()
