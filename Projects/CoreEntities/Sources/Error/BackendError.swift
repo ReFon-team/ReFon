@@ -14,6 +14,22 @@ public struct BackendError: Decodable, Error {
     public let errorCode: String
     public let message: String
     
+    public var typeError: TypeError {
+        TypeError.typeError(from: errorCode)
+    }
+    
+    public enum TypeError: String {
+        case unknown
+        case invalidEmailFormat = "validation_failed"
+        case tokenHasExpiredOrIsInvalid = "otp_expired"
+        case invalidCredentials = "invalid_credentials"
+        case weakPassword = "weak_password"
+        
+        public static func typeError(from errorCode: String) -> TypeError {
+            TypeError(rawValue: errorCode) ?? .unknown
+        }
+    }
+    
     public init(code: Int, errorCode: String, message: String) {
         self.code = code
         self.errorCode = errorCode
