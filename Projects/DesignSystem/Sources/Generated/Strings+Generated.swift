@@ -10,8 +10,19 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 public enum Strings {
-  /// хуй
-  public static let dick = Strings.tr("Localizable", "dick", fallback: "хуй")
+  public enum Button {
+    /// Создать аккаунт
+    public static let createAccount = Strings.tr("Localizable", "button.create_account", fallback: "Создать аккаунт")
+    /// Войти
+    public static let signIn = Strings.tr("Localizable", "button.sign_in", fallback: "Войти")
+  }
+  public enum Onboarding {
+    /// Крупнейшая площадка
+    /// для сделок с техникой
+    public static let subtitle = Strings.tr("Localizable", "onboarding.subtitle", fallback: "Крупнейшая площадка\nдля сделок с техникой")
+    /// ReFon
+    public static let title = Strings.tr("Localizable", "onboarding.title", fallback: "ReFon")
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
