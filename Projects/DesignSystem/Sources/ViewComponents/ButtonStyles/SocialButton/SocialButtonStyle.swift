@@ -8,12 +8,22 @@
 
 import SwiftUI
 
-struct SocialButtonStyle: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct SocialButtonStyle: ButtonStyle {
+    
+    enum SocialType {
+        case google
+        case apple
+        case email
     }
+    
+    enum Shape {
+        case circle
+        case roundedrectangle
+    }
+    
+    func makeBody(configuration: Configuration) -> some View {
+        //
+    }
+    
 }
 
-#Preview {
-    SocialButtonStyle()
-}

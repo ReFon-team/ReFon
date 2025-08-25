@@ -71,10 +71,7 @@ public struct PrimaryButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity)
             .frame(height: 56)
             .background(style.backgroundColor)
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder()
-            )
+            .modifier(BottomBorderModifier())
             .cornerRadius(10)
             .opacity(configuration.isPressed ? 0.5 : 1.0)
             .opacity(isLoading ? 0.3 : 1.0)
