@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import DesignSystem
 
 public struct SignUpView: View {
     @State private var viewModel: SignUpViewModel
@@ -16,9 +17,14 @@ public struct SignUpView: View {
     }
     
     public var body: some View {
-        Text("hi")
+        VStack(alignment: .leading, spacing: 0) {
+            CustomTextFieldView(type: .username, text: .constant(""))
+        }
+        .background(Color.white)
     }
 }
+
+
 
 #Preview {
     SignUpView(
