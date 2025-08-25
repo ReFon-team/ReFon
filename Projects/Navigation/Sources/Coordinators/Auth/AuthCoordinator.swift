@@ -30,11 +30,17 @@ public final class AuthCoordinator {
     func build(screen: Screen) -> some View {
         switch screen {
         case .onboarding:
-            OnboardingView(viewModel: OnboardingViewModel())
+            OnboardingView(viewModel: OnboardingViewModel(onNavigationRegister: { [weak self] in self?.push(screen: .signUp) }, onNavigationSignIn: { }))
         case .signUp:
             SignUpView(
                 viewModel: SignUpViewModel()
             )
         }
+    }
+}
+
+extension AuthCoordinator {
+    func push(screen: Screen) {
+        path.append(screen)
     }
 }
