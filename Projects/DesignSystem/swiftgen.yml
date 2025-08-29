@@ -10,7 +10,7 @@
 ## Generate constants for your localized strings.
 ##   Be sure that SwiftGen only parses ONE locale (typically Base.lproj, or en.lproj, or whichever your development region is); otherwise it will generate the same keys multiple times.
 ##   SwiftGen will parse all `.strings` files found in that folder.
- xcassets:
+xcassets:
   inputs:
     - Sources/Resources/Colors.xcassets
     - Sources/Resources/Images.xcassets
@@ -20,15 +20,15 @@
         forceProvidesNamespaces: true
         publicAccess: true
       output: Sources/Generated/XCAssets+Generated.swift
- strings:
-   inputs:
-     - Sources/Resources/Localizable.strings
-   outputs:
-     - templateName: structured-swift5
-       params:
+strings:
+  inputs:
+    - Sources/Resources/Localizable.strings
+  outputs:
+    - templateName: structured-swift5
+      params:
         publicAccess: true
         enumName: Strings
-       output: Sources/Generated/Strings+Generated.swift
+      output: Sources/Generated/Strings+Generated.swift
 
 
 ## Generate constants for your Assets Catalogs, including constants for images, colors, ARKit resources, etc.

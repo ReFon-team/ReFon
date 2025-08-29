@@ -44,12 +44,12 @@ public struct OnboardingView: View {
             Spacer()
             
             VStack(spacing: 12) {
-                Button(Strings.Button.signIn) {
+                Button(Strings.signIn) {
                     viewModel.pressButtonSignIn()
                 }
                 .buttonStyle(PrimaryButtonStyle(style: .primary))
                 
-                Button(Strings.Button.createAccount) {
+                Button(Strings.createAccount) {
                     viewModel.pressButtonCreateAccount()
                 }
                 .buttonStyle(PrimaryButtonStyle(style: .secondary))

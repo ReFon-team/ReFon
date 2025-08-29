@@ -1,4 +1,12 @@
 "onboarding.title" = "ReFon";
 "onboarding.subtitle" = "Крупнейшая площадка\nдля сделок с техникой";
-"button.sign_in" = "Войти";
-"button.create_account" = "Создать аккаунт";
+"sign_in" = "Sign in";
+"create_account" = "Sign up";
+"register_with" = "Or Register with";
+"error.email" = "некорректный Email";
+"error.password.lowercase" = "маленькой буквы";
+"error.password.uppercase" = "большой буквы";
+"error.password.number" = "цифры";
+"error.password.special_symbol" = "специального символа";
+"error.password.min_lenght" = "минимум 6 символов";
+"error.password.not_enough" = "Не хватает";

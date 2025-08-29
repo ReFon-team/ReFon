@@ -10,5 +10,10 @@ import Observation
 
 @Observable
 public final class SignUpViewModel {
+    
+    var email: String = ""
+    var password: String = ""
+    var passwordConfirm: String = ""
+    
     public init() {}
 }
