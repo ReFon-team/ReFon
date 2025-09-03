@@ -18,7 +18,6 @@ public struct SignUpView: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 22) {
-            
             Spacer()
             
             Text(Strings.createAccount)
@@ -31,8 +30,9 @@ public struct SignUpView: View {
             
             Button(Strings.createAccount) {
                 //
-            }.buttonStyle(PrimaryButtonStyle(style: .primary))
-                .padding(.top, 15)
+            }
+            .primaryButton(style: .fill)
+            .padding(.top, 15)
             
             HStack(spacing: 16) {
                 Rectangle()
@@ -54,8 +54,6 @@ public struct SignUpView: View {
         .background(Color.white)
     }
 }
-
-
 
 #Preview {
     SignUpView(

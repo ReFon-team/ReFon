@@ -10,8 +10,8 @@ import SwiftUI
 
 public struct PrimaryButtonStyle: ButtonStyle {
     public enum Style {
-        case primary
-        case secondary
+        case fill
+        case border
         
         var backgroundColor: Color {
             switch self {
@@ -112,19 +112,19 @@ public extension Button {
         Button("Основная кнопка") {
             print("Нажата основная кнопка")
         }
-        .primaryButton(style: .primary)
+        .primaryButton(style: .fill)
         
         // Вторичная кнопка
         Button("Вторичная кнопка") {
             print("Нажата вторичная кнопка")
         }
-        .primaryButton(style: .secondary)
+        .primaryButton(style: .border)
         
         // Кнопка с загрузкой
         Button("Кнопка с загрузкой") {
             print("Нажата кнопка с загрузкой")
         }
-        .primaryButton(style: .primary, isLoading: true)
+        .primaryButton(style: .fill, isLoading: true)
     }
     .padding()
 }

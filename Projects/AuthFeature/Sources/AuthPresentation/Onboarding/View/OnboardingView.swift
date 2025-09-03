@@ -47,12 +47,12 @@ public struct OnboardingView: View {
                 Button(Strings.signIn) {
                     viewModel.pressButtonSignIn()
                 }
-                .primaryButton(style: .primary)
+                .primaryButton(style: .fill)
                 
                 Button(Strings.createAccount) {
                     viewModel.pressButtonCreateAccount()
                 }
-                .primaryButton(style: .secondary)
+                .primaryButton(style: .border)
             }
         }
         .padding(.horizontal, 24)

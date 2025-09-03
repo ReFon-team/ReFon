@@ -6,11 +6,9 @@
 //  Copyright © 2025 Vadim Martynenko. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
 
 public struct BorderModifier: ViewModifier {
-    
     public enum TypeBorder {
         case rounded
         case stroke
@@ -38,5 +36,13 @@ public struct BorderModifier: ViewModifier {
                     }
                 }
             )
+    }
+}
+
+// MARK: - View Extension
+
+public extension View {
+    func border(color: Color = .black, type: BorderModifier.TypeBorder = .rounded) -> some View {
+        modifier(BorderModifier(color: color, type: type))
     }
 }

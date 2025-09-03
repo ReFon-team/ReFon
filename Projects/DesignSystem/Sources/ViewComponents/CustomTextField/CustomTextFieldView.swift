@@ -10,7 +10,6 @@ import SwiftUI
 import Common
 
 public struct CustomTextFieldView: View {
-    
     public enum TextFieldType: String {
         case email = "Email"
         case password = "Create a password"
@@ -53,7 +52,6 @@ public struct CustomTextFieldView: View {
 }
 
 extension CustomTextFieldView {
-    
     private var example: String {
         switch type {
         case .email:
@@ -117,7 +115,6 @@ extension CustomTextFieldView {
     }
     
     private var borderColor: Color {
-        
         switch type {
         case .email:
             if text.isNotEmpty && !text.isValidEmail {
@@ -145,7 +142,7 @@ extension CustomTextFieldView {
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .padding()
-                .modifier(BorderModifier(color: borderColor))
+                .border(color: borderColor)
                 .animation(.easeInOut(duration: 0.3), value: borderColor)
         }
     }
@@ -164,7 +161,7 @@ extension CustomTextFieldView {
         .disableAutocorrection(true)
         .padding()
         .padding(.trailing, 30)
-        .modifier(BorderModifier(color: borderColor))
+        .border(color: borderColor)
         .animation(.easeInOut(duration: 0.3), value: borderColor)
     }
 
