@@ -14,7 +14,7 @@ public struct OnboardingView: View {
     @State private var viewModel: OnboardingViewModel
     
     public init(viewModel: OnboardingViewModel) {
-        self.viewModel = viewModel
+        self._viewModel = State(wrappedValue: viewModel)
     }
     
     public var body: some View {
@@ -47,12 +47,12 @@ public struct OnboardingView: View {
                 Button(Strings.signIn) {
                     viewModel.pressButtonSignIn()
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .primary))
+                .primaryButton(style: .primary)
                 
                 Button(Strings.createAccount) {
                     viewModel.pressButtonCreateAccount()
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .secondary))
+                .primaryButton(style: .secondary)
             }
         }
         .padding(.horizontal, 24)

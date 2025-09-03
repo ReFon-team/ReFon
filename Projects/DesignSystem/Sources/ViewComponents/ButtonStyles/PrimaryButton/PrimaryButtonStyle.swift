@@ -87,35 +87,44 @@ public struct PrimaryButtonStyle: ButtonStyle {
     
 }
 
-struct PrimaryButtonView: View {
-    var body: some View {
-        VStack(spacing: 20) {
-            // Основная кнопка
-            Button("Основная кнопка") {
-                print("Нажата основная кнопка")
-            }
-            .buttonStyle(PrimaryButtonStyle(style: .primary))
-            
-            // Вторичная кнопка
-            Button("Вторичная кнопка") {
-                print("Нажата вторичная кнопка")
-            }
-            .buttonStyle(PrimaryButtonStyle(style: .secondary))
-            
-            // Кнопка с загрузкой
-            Button("Кнопка с загрузкой") {
-                print("Нажата кнопка с загрузкой")
-            }
-            .buttonStyle(PrimaryButtonStyle(
-                style: .primary,
-                isLoading: true
-            ))
-        }
-        .padding()
+// MARK: - Button Extension
+
+public extension Button {
+    func primaryButton(
+        style: PrimaryButtonStyle.Style,
+        isLoading: Bool = false,
+        fontSize: CGFloat = 16
+    ) -> some View {
+        buttonStyle(
+            PrimaryButtonStyle(
+                style: style,
+                isLoading: isLoading,
+                fontSize: fontSize
+            )
+        )
     }
 }
 
 // MARK: - Превью
 #Preview {
-    PrimaryButtonView()
+    VStack(spacing: 20) {
+        // Основная кнопка
+        Button("Основная кнопка") {
+            print("Нажата основная кнопка")
+        }
+        .primaryButton(style: .primary)
+        
+        // Вторичная кнопка
+        Button("Вторичная кнопка") {
+            print("Нажата вторичная кнопка")
+        }
+        .primaryButton(style: .secondary)
+        
+        // Кнопка с загрузкой
+        Button("Кнопка с загрузкой") {
+            print("Нажата кнопка с загрузкой")
+        }
+        .primaryButton(style: .primary, isLoading: true)
+    }
+    .padding()
 }
